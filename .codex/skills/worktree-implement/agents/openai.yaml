@@ -1,0 +1,4 @@
+interface:
+  display_name: "Worktree Implement"
+  short_description: "Create and prepare implementation worktrees for this project"
+  default_prompt: "Prepare a new git worktree for implementation in this repo"
