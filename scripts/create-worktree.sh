@@ -24,15 +24,26 @@ fi
 echo "Creating worktree: ${WORKTREE_PATH}"
 git -C "${REPO_ROOT}" worktree add -b "${BRANCH_NAME}" "${WORKTREE_PATH}" "${BASE_REF}"
 
-if [[ -f "${REPO_ROOT}/.env.local" ]]; then
-  cp "${REPO_ROOT}/.env.local" "${WORKTREE_PATH}/.env.local"
-  echo "Copied .env.local to worktree"
+if [[ -f "${REPO_ROOT}/.env" ]]; then
+  cp "${REPO_ROOT}/.env" "${WORKTREE_PATH}/.env"
+  echo "Copied .env to worktree"
 else
-  echo ".env.local not found in repo root; skipping copy"
+  echo ".env not found in repo root; skipping copy"
 fi
 
 echo "Installing dependencies in worktree"
 npm --prefix "${WORKTREE_PATH}" install --no-package-lock
+
+echo "Checking Docker DB port mapping (expected: 54322)"
+if command -v docker >/dev/null 2>&1; then
+  if docker ps --format '{{.Ports}}' | grep -q '54322'; then
+    echo "Database port 54322 is exposed in docker ps"
+  else
+    echo "Warning: could not find port 54322 in docker ps output"
+  fi
+else
+  echo "Warning: docker command not found; skipping DB port check"
+fi
 
 cat <<EOF
 

@@ -1,6 +1,6 @@
 ---
 name: worktree-implement
-description: Create and prepare a git worktree for implementation in this project by creating a branch worktree, copying .env.local, and installing dependencies. Use when a user asks to start a new feature/fix branch with isolated workspace setup, especially for parallel implementation tasks.
+description: Create and prepare a git worktree for implementation in this project by creating a branch worktree, copying .env, installing dependencies, and checking Docker database port mapping. Use when a user asks to start a new feature/fix branch with isolated workspace setup, especially for parallel implementation tasks.
 ---
 
 # Worktree Implement
@@ -21,8 +21,9 @@ Create the branch worktree and bootstrap it for coding.
    `.codex/skills/worktree-implement/scripts/create-worktree.sh <branch_name> [base_ref]`
 4. Confirm completion by checking:
    - Worktree exists in `../worktrees/<branch_name>`
-   - `.env.local` exists in the new worktree when root `.env.local` exists
+   - `.env` exists in the new worktree when root `.env` exists
    - `node_modules` was installed in the worktree
+   - `docker ps` shows database port `54322` exposed
 5. Continue implementation in the new worktree path.
 
 ## Response Contract
