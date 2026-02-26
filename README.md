@@ -74,6 +74,46 @@ You can listen for Stripe webhooks locally through their CLI to handle subscript
 stripe listen --forward-to localhost:3000/api/stripe/webhook
 ```
 
+## Testing
+
+This project uses:
+
+- **Vitest** for unit tests
+- **Playwright** for end-to-end tests
+
+### Unit tests
+
+```bash
+pnpm test:unit
+pnpm test:unit:watch
+pnpm test:unit:coverage
+```
+
+### E2E tests
+
+Start Postgres (if not already running):
+
+```bash
+docker compose up -d
+```
+
+Prepare the test database (migrate + seed a deterministic test user):
+
+```bash
+pnpm db:prepare:test
+```
+
+Run Playwright tests:
+
+```bash
+pnpm test:e2e
+```
+
+The seeded test credentials are:
+
+- Email: `test@test.com`
+- Password: `admin123`
+
 ## Testing Payments
 
 To test Stripe payments, use the following test card details:
